@@ -26,10 +26,10 @@ WSL2: Ubuntu 24.04 · /root/QuantumDeploy
 
 ## Estrategia de ramas
 
-| Rama | Propósito | Regla |
-|---|---|---|
-| `canary` | Desarrollo directo | Commits rápidos y experimentos |
-| `main` | Línea estable | Se actualiza vía PR desde `canary` |
+| Rama       | Propósito         | Regla                                |
+| ---------- | ------------------ | ------------------------------------ |
+| `canary` | Desarrollo directo | Commits rápidos y experimentos      |
+| `main`   | Línea estable     | Se actualiza vía PR desde`canary` |
 
 ## Flujo diario
 
@@ -121,9 +121,9 @@ wsl -d Ubuntu-24.04 -u root -- bash -c "cd /root/QuantumDeploy && pnpm install"
 
 ## Licencias (recordatorio)
 
-| Código | Licencia | Ubicación |
-|---|---|---|
-| Core completo | Apache 2.0 — modificable libremente | todo el repo excepto `/proprietary` |
-| Funciones premium | Dokploy DSAL — **no redistribuir** | `apps/dokploy/components/proprietary`, `apps/dokploy/server/api/routers/proprietary`, `packages/server/src/services/proprietary` |
+| Código           | Licencia                                 | Ubicación                                                                                                                             |
+| ----------------- | ---------------------------------------- | -------------------------------------------------------------------------------------------------------------------------------------- |
+| Core completo     | Apache 2.0 — modificable libremente     | todo el repo excepto`/proprietary`                                                                                                   |
+| Funciones premium | Dokploy DSAL —**no redistribuir** | `apps/dokploy/components/proprietary`, `apps/dokploy/server/api/routers/proprietary`, `packages/server/src/services/proprietary` |
 
 Uso interno propio: permitido modificar todo. No publicar el fork con el código DSAL intacto.
