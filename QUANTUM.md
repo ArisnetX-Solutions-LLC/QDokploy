@@ -26,10 +26,10 @@ WSL2: Ubuntu 24.04 · /root/QuantumDeploy
 
 ## Estrategia de ramas
 
-| Rama | Propósito | Regla |
-|---|---|---|
-| `main` | Línea de desarrollo de QuantumDeploy | Todos los commits y rebranding van aquí |
-| `canary` | Espejo exacto de Dokploy | Solo fast-forward desde upstream, **nunca commitear** |
+| Rama       | Propósito         | Regla                                |
+| ---------- | ------------------ | ------------------------------------ |
+| `canary` | Desarrollo directo | Commits rápidos y experimentos      |
+| `main`   | Línea estable     | Se actualiza vía PR desde`canary` |
 
 ## Flujo diario
 
@@ -37,10 +37,17 @@ WSL2: Ubuntu 24.04 · /root/QuantumDeploy
 
 ```bash
 cd D:\PROJECT_ARISNETX\QDokploy\QuantumDeploy
-git checkout main
+git checkout canary
 # ... editar código ...
 git add -A && git commit -m "feat: mi cambio"
-git push                # → GitHub origin/main
+git push                # → GitHub origin/canary
+```
+
+Opcional: abrir PR `canary → main` en GitHub para integrar a la línea estable.
+
+```powershell
+gh pr create --base main --head canary
+gh pr merge --merge
 ```
 
 ### 2. Probar (WSL)
@@ -48,7 +55,7 @@ git push                # → GitHub origin/main
 ```bash
 wsl -d Ubuntu-24.04 -u root
 cd /root/QuantumDeploy
-git pull espejo main            # sincroniza desde la copia Windows
+git pull espejo canary          # sincroniza desde la copia Windows
 systemctl restart qd-dev        # aplica cambios del server (tsx watch reinicia solo la UI)
 ```
 
@@ -62,13 +69,12 @@ Abrir http://localhost:3000
 ```bash
 # En Windows
 git checkout canary
-git pull upstream canary        # traer novedades de Dokploy
-git push                        # actualizar espejo en GitHub
-
-git checkout main
-git merge canary                # integrar novedades a nuestra línea
+git pull origin canary          # asegurar rama al día
+git merge upstream/canary       # traer novedades de Dokploy
 # resolver conflictos si los hay
 git push
+
+# probar en WSL antes de integrar a main
 ```
 
 En WSL después de una actualización grande:
@@ -115,9 +121,9 @@ wsl -d Ubuntu-24.04 -u root -- bash -c "cd /root/QuantumDeploy && pnpm install"
 
 ## Licencias (recordatorio)
 
-| Código | Licencia | Ubicación |
-|---|---|---|
-| Core completo | Apache 2.0 — modificable libremente | todo el repo excepto `/proprietary` |
-| Funciones premium | Dokploy DSAL — **no redistribuir** | `apps/dokploy/components/proprietary`, `apps/dokploy/server/api/routers/proprietary`, `packages/server/src/services/proprietary` |
+| Código           | Licencia                                 | Ubicación                                                                                                                             |
+| ----------------- | ---------------------------------------- | -------------------------------------------------------------------------------------------------------------------------------------- |
+| Core completo     | Apache 2.0 — modificable libremente     | todo el repo excepto`/proprietary`                                                                                                   |
+| Funciones premium | Dokploy DSAL —**no redistribuir** | `apps/dokploy/components/proprietary`, `apps/dokploy/server/api/routers/proprietary`, `packages/server/src/services/proprietary` |
 
 Uso interno propio: permitido modificar todo. No publicar el fork con el código DSAL intacto.
